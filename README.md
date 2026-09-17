@@ -18,15 +18,15 @@ The workflow connects retail transactions, 100 reproducible business questions, 
 
 [Explore a case](https://yuchi-wang02.github.io/bizhallu/portfolio_demo_v2.html?case=q_0064) · [Methods and results](https://yuchi-wang02.github.io/bizhallu/detector_interpretation.html) · [Code](https://github.com/Yuchi-Wang02/bizhallu)
 
-### DelaySentinel · Investigating a misleading perfect score
+### DelaySentinel · Building and evaluating logistics AI
 
-A published logistics fine-tune scored 100% on its original 200-row split. A depth-2 decision tree matched it: the synthetic table's label was fully determined by two input fields.
+A published Llama fine-tune, a reproducible evaluation workflow, and controlled tests of model behavior. The project connects model development with a practical question: **what does a strong score actually establish?**
 
-[![On the same historical 200-row split, the fine-tuned Llama and a depth-2 decision tree both score 100%. Label leakage makes these scores uninformative about real delay prediction.](assets/delaysentinel-comparison.svg)](https://github.com/Yuchi-Wang02/delaysentinel/blob/main/docs/case_study.md)
+[![The Llama fine-tune and a depth-2 tree both score 100% on the historical 200-row split. A two-field rule reproduces the source labels.](assets/delaysentinel-comparison.svg)](https://github.com/Yuchi-Wang02/delaysentinel)
 
-The retrospective audit traces label leakage and probes model behavior. That split is not a clean independent test set. A separate study uses classical models on real Olist orders to explore a more realistic prediction task.
+The audit explains the score through a two-field label rule, then tests how predictions respond to changed inputs—including an irrelevant note that flips all 84 negative predictions. The historical split includes training-time evaluation rows. A separate Olist study examines classical models using checkout-time information and a later test period.
 
-[Read the case study](https://github.com/Yuchi-Wang02/delaysentinel/blob/main/docs/case_study.md) · [Inspect the results](https://github.com/Yuchi-Wang02/delaysentinel/tree/main/results) · [Model card](https://huggingface.co/Yuchiwang02/Llama-3.2-1B-DelaySentinel)
+[Explore the project](https://github.com/Yuchi-Wang02/delaysentinel) · [Read the case study](https://github.com/Yuchi-Wang02/delaysentinel/blob/main/docs/case_study.md) · [Model card](https://huggingface.co/Yuchiwang02/Llama-3.2-1B-DelaySentinel)
 
 ## Background
 
