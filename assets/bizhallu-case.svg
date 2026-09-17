@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="212" viewBox="0 0 800 212" role="img" aria-labelledby="title desc">
+  <title id="title">A correct amount with an incorrect rank</title>
+  <desc id="desc">April 2011, WOODEN UNION JACK BUNTING. The model answer assigns rank 3 and GBP 4,173.18; the product is rank 7 among the eight evidence rows shown. This is a curated evidence check.</desc>
+  <rect width="800" height="212" rx="12" fill="#f6f8fa"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="24" y="36" font-size="24" fill="#334155">April 2011 · Same product, same GBP 4,173.18</text>
+    <rect x="24" y="54" width="366" height="109" rx="8" fill="#fff1ec"/>
+    <rect x="410" y="54" width="366" height="109" rx="8" fill="#e8f3f0"/>
+    <text x="44" y="87" font-size="24" fill="#87422b">Model answer</text>
+    <text x="44" y="140" font-size="42" font-weight="600" fill="#7c3623">Rank 3</text>
+    <text x="430" y="87" font-size="24" fill="#245e53">Source evidence</text>
+    <text x="430" y="140" font-size="42" font-weight="600" fill="#184d43">Rank 7</text>
+    <text x="24" y="195" font-size="22" fill="#475569">Curated evidence check · Inspect the original answer and table</text>
+  </g>
+</svg>
