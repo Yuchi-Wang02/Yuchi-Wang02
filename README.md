@@ -1,75 +1,37 @@
 # Yuchi Wang
 
-M.S. in Business Analytics and Artificial Intelligence, Johns Hopkins Carey Business School (expected Aug 2027) ·
-B.S. in Business Administration, Accounting and Logistics Management, The Ohio State University (cum laude) ·
-Washington, DC · yuchiwang02@outlook.com
+I'm an MS student in Business Analytics and Artificial Intelligence at **Johns Hopkins Carey Business School** (expected August 2027). I graduated **cum laude from Ohio State**, with a background in accounting and logistics management.
 
-I build LLM and ML pipelines on business data, then audit the numbers the way a skeptical reviewer would:
-the baseline that beats the model gets reported, labels carry their provenance, and a model I had already
-published got re-scored a year later and written up as a leakage case study.
+My projects examine the reliability of AI in business analytics: how data definitions shape results, whether model evaluations are meaningful, and whether business claims are supported by evidence.
 
-## Projects
+Washington, DC · [Email](mailto:yuchiwang02@outlook.com) · [Hugging Face](https://huggingface.co/Yuchiwang02)
 
-### BizHallu — span-level evidence-grounding audit of LLM-written retail analysis
+## Selected projects
 
-[Site and cases](https://yuchi-wang02.github.io/bizhallu/) ·
-[Repository](https://github.com/Yuchi-Wang02/bizhallu) ·
-[One-page research brief (PDF)](https://yuchi-wang02.github.io/bizhallu/assets/bizhallu_research_brief.pdf)
+### BizHallu · Checking AI-generated business claims
 
-*Finding: a correct number can still support the wrong business claim. Qwen3-0.6B copies real ledger values into wrong
-product/rank bindings at near-100% token confidence; uncertainty signals miss this, and a deterministic evidence tie-out
-catches it on this data.*
+A correct amount can still support an incorrect claim. In one retail example, an LLM copies the right product and amount but assigns it third place; the evidence places it seventh.
 
-- Built the pipeline: 541k UCI Online Retail rows; 100 deterministic questions (7 types) with gold answers and evidence
-  tables; local Qwen3-0.6B answers with token traces; 12 uncertainty signals scored on 205 pre-identified, AI-assisted
-  provisional span labels (no independent human annotation yet).
-- Reported every metric beside its baseline: on 103 pre-identified test spans (61 positive, error-enriched), top-2 margin
-  AP 0.835 [question-cluster bootstrap 95% CI 0.724–0.923], the exploratory maximum over 12 signals chosen on test; a
-  fact-type prior baseline (AUROC 0.768) beats that signal’s AUROC (0.757 [0.656–0.863]); within-question AUROC 0.760
-  (permutation p < 0.0005); dev and test share periods.
-- Traced one inspectable error: an April 2011 answer ranks WOODEN UNION JACK BUNTING 3rd at GBP 4,173.18; the amount
-  matches its source row, but the product is 7th of the 8 evidence rows shown (a hand-checked case, not an automated
-  detector output).
-- Audited the revenue definition with accounting rules: 46.8% of “cancellation/return” negative revenue was
-  non-merchandise, a GBP 11,062.06 bad-debt line sat inside August revenue, and same-day reversal pairs inflated
-  January’s return rate from 8.84% to 19.04%; issued metric contract v1.1 for new questions (v1 gold unchanged).
-- Shipped 120 Python and 25 Node tests, GitHub Actions CI on public artifacts, and a GitHub Pages site with interactive
-  cases; designed a hash-committed follow-up study (48 period-disjoint contexts, 96 frozen private questions;
-  design-only, 3 of 7 gates, not executed).
+[![April 2011 example: the same product and GBP 4,173.18 appear at rank 3 in the model answer, but rank 7 in the evidence. This is a curated evidence check.](assets/bizhallu-case.svg)](https://yuchi-wang02.github.io/bizhallu/portfolio_demo_v2.html?case=q_0064)
 
-Independent project; directed with AI-assisted implementation and review. Data: UCI Online Retail (CC BY 4.0). Code: MIT.
+The workflow connects retail transactions, 100 reproducible business questions, computed reference answers, and local model responses. Interactive cases make the errors inspectable. The evaluation uses provisional, AI-assisted span labels without independent human annotation; the featured case is a curated evidence check.
 
-### DelaySentinel — label-leakage self-audit of a fine-tuned Llama-3.2-1B
+[Explore a case](https://yuchi-wang02.github.io/bizhallu/portfolio_demo_v2.html?case=q_0064) · [Methods and results](https://yuchi-wang02.github.io/bizhallu/detector_interpretation.html) · [Code](https://github.com/Yuchi-Wang02/bizhallu)
 
-[Repository](https://github.com/Yuchi-Wang02/delaysentinel) ·
-[Model card](https://huggingface.co/Yuchiwang02/Llama-3.2-1B-DelaySentinel) ·
-[Frozen split](https://huggingface.co/datasets/Yuchiwang02/smart-logistics-delay-split-v0) ·
-[Case study](https://github.com/Yuchi-Wang02/delaysentinel/blob/main/docs/case_study.md)
+### DelaySentinel · Investigating a misleading perfect score
 
-*Finding: the training label was a two-column rule over the model’s own inputs (Shipment_Status = “Delayed” OR
-Traffic_Status = “Heavy” on 1,000/1,000 rows); the model keys on the surface form of those two values, not on any delay
-driver.*
+A published logistics fine-tune scored 100% on its original 200-row split. A depth-2 decision tree matched it: the synthetic table's label was fully determined by two input fields.
 
-- Fine-tuned Llama-3.2-1B-Instruct (full-parameter SFT) on a 1,000-row synthetic Kaggle table and uploaded it to Hugging
-  Face (Sep 2025) without computing accuracy; rescored it a year later: accuracy 1.000 on its 200-row split, matched
-  exactly by a depth-2 decision tree.
-- Localized the trigger with 104 counterfactual probe sets scored by teacher-forced logit margin: all 261 edits to the two
-  rule fields flip the answer, 3,200 edits to the other 13 fields change nothing; gradient boosting without the leaked
-  columns scores AUROC 0.452.
-- Ran a positive control on real Olist orders (train 53,644 / test 37,702): logistic regression AUROC 0.691 [month-block
-  bootstrap 0.633–0.760]; packaged the audit with 56 pytest cases and a CI check that fails when a quoted number is
-  missing from the saved results.
+[![On the same historical 200-row split, the fine-tuned Llama and a depth-2 decision tree both score 100%. Label leakage makes these scores uninformative about real delay prediction.](assets/delaysentinel-comparison.svg)](https://github.com/Yuchi-Wang02/delaysentinel/blob/main/docs/case_study.md)
 
-Code: MIT. Weights: Llama 3.2 Community License. The Kaggle table is synthetic (CC0); the Olist control uses the public
-Olist e-commerce dataset (CC BY-NC-SA 4.0), which is not redistributed here.
+The retrospective audit traces label leakage and probes model behavior. That split is not a clean independent test set. A separate study uses classical models on real Olist orders to explore a more realistic prediction task.
 
-## Toolbox
+[Read the case study](https://github.com/Yuchi-Wang02/delaysentinel/blob/main/docs/case_study.md) · [Inspect the results](https://github.com/Yuchi-Wang02/delaysentinel/tree/main/results) · [Model card](https://huggingface.co/Yuchiwang02/Llama-3.2-1B-DelaySentinel)
 
-Python (pandas, NumPy, scikit-learn, SciPy), PyTorch, Hugging Face Transformers (local Qwen3-0.6B inference,
-Llama-3.2-1B SFT, llama.cpp/GGUF), pytest, Git/GitHub Actions/Pages, SQL (basic), Excel (Solver, pivot tables),
-R (coursework). Methods: LLM evaluation and uncertainty signals (entropy, top-2 margin), label-leakage audits,
-counterfactual probing, cluster-bootstrap and permutation inference, tied-score AP, Holt-Winters forecasting, integer
-programming, P50/P90 cost modeling.
+## Background
 
-Before this: Supply Chain Management Intern at SF Express (remote, 2025) and Social Intelligence Analytics Intern at
-Ipsos (China), Shanghai (2025).
+Experience includes social intelligence analytics at **Ipsos in Shanghai**, supply chain analysis at **SF Express**, and work as a **Peer Advisor at Ohio State's Office of International Affairs**, supporting international students.
+
+**Project stack:** Python, pandas, scikit-learn, PyTorch, Hugging Face Transformers, pytest, and GitHub Actions.
+
+These personal projects use AI-assisted implementation and review. Each repository documents its methods, evidence, and limitations.
