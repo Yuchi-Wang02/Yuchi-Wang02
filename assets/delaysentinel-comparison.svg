@@ -11,5 +11,5 @@
 <text x="44" y="172" font-size="42" font-weight="700" fill="#F5F8FC">100%</text>
 <text x="430" y="123" font-size="22" fill="#F5F8FC">Depth-2 decision tree</text>
 <text x="430" y="172" font-size="42" font-weight="700" fill="#77E6C5">100%</text>
-<text x="24" y="222" font-size="19" fill="#AFC2D7">Retrospective evaluation · includes training-time evaluation rows</text>
+<text x="24" y="222" font-size="19" fill="#77E6C5">One unrelated note flips 84 of 84 negative predictions</text>
 </g></svg>
